@@ -7,20 +7,23 @@ if (isset($_FILES)) {
 
     $time = time();
     #Сохранение загружемого файла
-    $uploaddir = 'uploads/';
-    $uploadfile = $uploaddir . $time . "_" . basename($_FILES['csv-file']['name']);
-    $extension = explode(".", $_FILES['csv-file']['name']);
-    if ($extension[1] === "csv") {
+
+    $uploadfile = $time . "_" . basename($_FILES['csv-file']['name']);
+    $arr = explode(".", $_FILES['csv-file']['name']);
+    $extension = $arr[1];
+    $file_name = $arr[0];
+    if ($extension === "csv") {
         move_uploaded_file($_FILES['csv-file']['tmp_name'], $uploadfile);
     } else {
         exit("Неподходящий формат файла: $extension[1]");
     }
 }
+
 $file = fopen($uploadfile, "r");
 $data = fgetcsv($file, null, ",");
 
 #создаем файл csv
-$report_file_name = "reports/" . $time . "_report.csv";
+$report_file_name = "report_" . $file_name . ".csv";
 $new_file = fopen($report_file_name, "w");
 
 #задаем имена столбцов, и столбец ошибок
@@ -96,5 +99,6 @@ if (file_exists($report_file_name)) {
     header('Content-Length: ' . filesize($report_file_name));
     // читаем файл и отправляем его пользователю
     readfile($report_file_name);
+    ob_end_flush();
     exit(0);
 }

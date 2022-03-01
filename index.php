@@ -9,15 +9,20 @@
 </head>
 
 <body>
-    <form action = "/csv_handler.php" enctype="multipart/form-data" method="post">
+    <form action="/csv_handler.php"
+            enctype="multipart/form-data"
+            method="post"
+            style="padding: 10px; text-align:center">
         <h1>Загрузка файла</h1>
         <input type="file" name="csv-file" accept=".csv">
         <br> <br>
         <button type="submit">Загрузить</button>
     </form>
     <br><br>
-    <form action="/update.php" method="post">
-        <h1>Обновление по полю "Код"</h1>
+    <form action="/update.php"
+            method="post"
+            style="border-top:solid 5px grey; padding: 10px; text-align:center">
+        <h1>Обновить строку по полю "Код"</h1>
         <input type="text" name="code" placeholder="Код">
         <input type="text" name="name" placeholder="Название">
         <br> <br>
